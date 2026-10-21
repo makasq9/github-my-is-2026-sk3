@@ -1,11 +1,25 @@
-﻿// Program 001 - Výpis řady čísel
+﻿// Program 001 - Výpis řady čísel (rozšířená verze)
 // Autor: Maksym Yatsenko
+// Vylepšení: kontrola vstupu. Program nespadne, když uživatel zadá text.
+
+// Pomocná funkce: ptá se na číslo tak dlouho, dokud uživatel nezadá platné.
+// TryParse nevyhodí chybu, jen vrátí true/false, proto je bezpečnější než Parse.
+static int ReadInt(string prompt)
+{
+    while (true)
+    {
+        Console.Write(prompt);
+        if (int.TryParse(Console.ReadLine(), out int value))
+        {
+            return value;
+        }
+        Console.WriteLine("Neplatné číslo, zkuste to znovu.");
+    }
+}
 
 string again = "a";
 
-// .ToLower() převede vstup na malá písmena,
-// takže program bude pokračovat při zadávání "a" tak i "A"
-while (again.ToLower() == "a")
+while (again.Trim().ToLower() == "a")
 {
     Console.Clear();
     Console.WriteLine("======================================");
@@ -13,33 +27,25 @@ while (again.ToLower() == "a")
     Console.WriteLine("======================================");
     Console.WriteLine();
 
-    // Načtení vstupních hodnot od uživatele
-    Console.Write("Zadejte první hodnotu (first): ");
-    int first = int.Parse(Console.ReadLine() ?? "1");
+    int first = ReadInt("Zadejte první hodnotu (first): ");
+    int last = ReadInt("Zadejte poslední hodnotu (last): ");
 
-    Console.Write("Zadejte poslední hodnotu (last): ");
-    int last = int.Parse(Console.ReadLine() ?? "10");
-
-    Console.Write("Zadejte krok (step): ");
-    int step = int.Parse(Console.ReadLine() ?? "1");
+    // Krok se ptáme znovu, dokud není větší než 0.
+    int step = ReadInt("Zadejte krok (step): ");
+    while (step <= 0)
+    {
+        Console.WriteLine("Krok musí být větší než 0!");
+        step = ReadInt("Zadejte krok (step): ");
+    }
 
     Console.WriteLine();
     Console.WriteLine("--- Výstup řady ---");
 
-    // Výpis řady pomocí cyklu
-    if (step > 0)
+    for (int i = first; i <= last; i += step)
     {
-        for (int i = first; i <= last; i += step)
-        {
-            Console.WriteLine(i);
-        }
-    }
-    else
-    {
-        Console.WriteLine("Krok musí být větší než 0!");
+        Console.WriteLine(i);
     }
 
-    // Dotaz směrem k uživateli na opakování
     Console.WriteLine();
     Console.WriteLine("Pro opakování programu stiskněte klávesu a.");
     Console.WriteLine("Následně potvrďte klávesou Enter.");

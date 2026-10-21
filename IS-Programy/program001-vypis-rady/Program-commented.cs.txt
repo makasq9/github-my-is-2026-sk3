@@ -1,19 +1,21 @@
 ﻿// Program 001 - Výpis řady čísel
 // Autor: Maksym Yatsenko
 
+// Proměnná říká, jestli se má program opakovat. Na začátku je "a", aby cyklus poprvé proběhl.
 string again = "a";
 
-// .ToLower() převede vstup na malá písmena,
-// takže program bude pokračovat při zadávání "a" tak i "A"
+// ToLower() změní písmena na malá, takže funguje "a" i "A".
 while (again.ToLower() == "a")
 {
+    // Clear smaže starý výpis, aby při opakování nebyl chaos na obrazovce.
     Console.Clear();
     Console.WriteLine("======================================");
     Console.WriteLine("   PROGRAM 001: VÝPIS ŘADY ČÍSEL");
     Console.WriteLine("======================================");
     Console.WriteLine();
 
-    // Načtení vstupních hodnot od uživatele
+    // ReadLine() může vrátit null, proto je tam ?? "1" jako náhradní hodnota.
+    // Pozor: int.Parse spadne, když uživatel napíše text.
     Console.Write("Zadejte první hodnotu (first): ");
     int first = int.Parse(Console.ReadLine() ?? "1");
 
@@ -26,7 +28,7 @@ while (again.ToLower() == "a")
     Console.WriteLine();
     Console.WriteLine("--- Výstup řady ---");
 
-    // Výpis řady pomocí cyklu
+    // Krok musí být kladný. Při 0 nebo záporném kroku by cyklus nikdy neskončil.
     if (step > 0)
     {
         for (int i = first; i <= last; i += step)
@@ -39,7 +41,6 @@ while (again.ToLower() == "a")
         Console.WriteLine("Krok musí být větší než 0!");
     }
 
-    // Dotaz směrem k uživateli na opakování
     Console.WriteLine();
     Console.WriteLine("Pro opakování programu stiskněte klávesu a.");
     Console.WriteLine("Následně potvrďte klávesou Enter.");
